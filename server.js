@@ -6,7 +6,6 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
 const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
 const userRoutes = require('./routes/userRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const { errorHandler } = require('./middleware/errorHandler');
@@ -20,8 +19,8 @@ const PORT = process.env.PORT || 5000;
 app.use(helmet());
 app.use(cors());
 app.use(bodyParser.json());
+app.use(express.json())
 app.use(fileUpload());
-app.use(rateLimit({ windowMs: 15 * 60 * 1000, max: 100 })); // Rate limit: 100 requests per 15 mins
 app.use('/api/users', userRoutes);
 app.use('/api/contacts', contactRoutes);
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
